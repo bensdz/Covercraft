@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma" // Consider changing to "./generated/client" or default
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  hashedPassword String
+  name           String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  maxFreeUsage   Int      @default(3)
+
+  coverLetters  CoverLetter[]
+  userTemplates UserTemplate[]
+  subscription  Subscription?
+}
+
+model CoverLetter {
+  id               String   @id @default(cuid())
+  userId           String
+  jobDescription   String   @db.Text
+  generatedContent String   @db.Text
+  language         String
+  templateStyle    String // e.g., "professional", "creative" from your generator settings
+  latexCode        String?  @db.Text // Stores the actual LaTeX code used, if custom
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model UserTemplate {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  content     String   @db.Text // Could be LaTeX, Markdown, etc.
+  type        String // e.g., "LATEX_COVER_LETTER", "MARKDOWN_RESUME"
+  description String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+// Optional: For handling user subscriptions if you plan to add paid features
+model Subscription {
+  id                     String    @id @default(cuid())
+  userId                 String    @unique // Each user has one subscription
+  stripeCustomerId       String?   @unique @map("stripe_customer_id")
+  stripeSubscriptionId   String?   @unique @map("stripe_subscription_id")
+  stripePriceId          String?   @map("stripe_price_id")
+  stripeCurrentPeriodEnd DateTime? @map("stripe_current_period_end")
+  status                 String? // e.g., "active", "canceled", "incomplete", "past_due"
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

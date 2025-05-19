@@ -1,5 +1,8 @@
+"use client";
+
 import { DropdownMenuLabel } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { useRouter } from "next/navigation"; // Added
 import {
   FileText,
   Plus,
@@ -37,6 +40,27 @@ import {
 import { Badge } from "@/components/ui/badge";
 
 export default function DashboardPage() {
+  const router = useRouter(); // Added
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("/api/auth/logout", {
+        method: "POST",
+      });
+
+      if (response.ok) {
+        router.push("/login"); // Redirect to login page after successful logout
+      } else {
+        // Handle logout error (e.g., show a notification)
+        console.error("Logout failed:", await response.json());
+        alert("Logout failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Logout request failed:", error);
+      alert("An error occurred during logout. Please try again.");
+    }
+  };
+
   // Sample data for demonstration
   const recentLetters = [
     {
@@ -95,7 +119,11 @@ export default function DashboardPage() {
                 Settings
               </Button>
             </Link>
-            <Button variant="outline" className="text-sm">
+            <Button
+              variant="outline"
+              className="text-sm"
+              onClick={handleLogout}
+            >
               Log out
             </Button>
           </div>
@@ -132,7 +160,7 @@ export default function DashboardPage() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">
-                German Letters
+                Total Templates
               </CardTitle>
               <Globe className="h-4 w-4 text-gray-500" />
             </CardHeader>
