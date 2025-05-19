@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { ArrowRight, FileText, Globe, Settings, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -25,20 +26,38 @@ export default function HomePage() {
               Home
             </Link>
             <Link
-              href="/features"
+              href="/#features"
               className="text-sm font-medium hover:text-sky-500 transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                document
+                  .getElementById("features")
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}
             >
               Features
             </Link>
             <Link
-              href="/pricing"
+              href="/#pricing"
               className="text-sm font-medium hover:text-sky-500 transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                document
+                  .getElementById("pricing")
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}
             >
               Pricing
             </Link>
             <Link
-              href="/faq"
+              href="/#faq"
               className="text-sm font-medium hover:text-sky-500 transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                document
+                  .getElementById("faq")
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}
             >
               FAQ
             </Link>
@@ -50,7 +69,7 @@ export default function HomePage() {
               </Button>
             </Link>
             <Link href="/register">
-              <Button className="bg-sky-400 hover:bg-sky-500 text-white">
+              <Button className="bg-sky-500 hover:bg-sky-600 text-white">
                 Register
               </Button>
             </Link>
@@ -100,7 +119,7 @@ export default function HomePage() {
         </section>
 
         {/* Features Section */}
-        <section className="py-16 md:py-24">
+        <section className="py-16 md:py-24" id="features">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -204,7 +223,7 @@ export default function HomePage() {
         </section>
 
         {/* Testimonials */}
-        <section className="py-16 md:py-24">
+        <section className="py-16 md:py-24" id="testimonials">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -241,7 +260,7 @@ export default function HomePage() {
         </section>
 
         {/* Pricing Section */}
-        <section className="py-16 md:py-24 bg-gray-50">
+        <section className="py-16 md:py-24 bg-gray-50" id="pricing">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -306,7 +325,7 @@ export default function HomePage() {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-16 md:py-24">
+        <section className="py-16 md:py-24" id="faq">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
