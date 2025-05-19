@@ -71,7 +71,7 @@ Sincerely,\\\\
               </Link>
             </Button>
             <FileText className="h-6 w-6 text-sky-400" />
-            <span className="text-xl font-bold">BewerbungsGenie</span>
+            <span className="text-xl font-bold">CoverCraft</span>
           </div>
           <div className="flex items-center gap-4">
             <Button variant="outline" className="text-sm">

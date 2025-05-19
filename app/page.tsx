@@ -15,7 +15,7 @@ export default function HomePage() {
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
             <FileText className="h-6 w-6 text-sky-400" />
-            <span className="text-xl font-bold">BewerbungsGenie</span>
+            <span className="text-xl font-bold">CoverCraft</span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
             <Link
@@ -49,9 +49,9 @@ export default function HomePage() {
                 Log in
               </Button>
             </Link>
-            <Link href="/signup">
+            <Link href="/register">
               <Button className="bg-sky-400 hover:bg-sky-500 text-white">
-                Sign up
+                Register
               </Button>
             </Link>
           </div>
@@ -222,7 +222,7 @@ export default function HomePage() {
             </div>
             <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-3 mt-12">
               <TestimonialCard
-                quote="I landed three interviews in a week after using BewerbungsGenie. The AI perfectly highlighted my relevant skills for each position."
+                quote="I landed three interviews in a week after using CoverCraft. The AI perfectly highlighted my relevant skills for each position."
                 author="Sarah K."
                 role="Marketing Professional"
               />
@@ -367,10 +367,10 @@ export default function HomePage() {
         <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
           <div className="flex items-center gap-2">
             <FileText className="h-5 w-5 text-sky-400" />
-            <span className="text-lg font-semibold">BewerbungsGenie</span>
+            <span className="text-lg font-semibold">CoverCraft</span>
           </div>
           <p className="text-center text-sm text-gray-500 md:text-left">
-            © 2025 BewerbungsGenie. All rights reserved.
+            © 2025 CoverCraft. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <Link

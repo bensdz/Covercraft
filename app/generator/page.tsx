@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -42,6 +41,7 @@ export default function GeneratorPage() {
   const [generatedLetter, setGeneratedLetter] = useState("");
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState("input");
+  const [useCustomLatex, setUseCustomLatex] = useState(false);
 
   const handleGenerate = () => {
     if (!jobDescription) return;
@@ -91,13 +91,13 @@ Mit freundlichen Grüßen,
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <FileText className="h-6 w-6 text-sky-400" />
-            <span className="text-xl font-bold">BewerbungsGenie</span>
+            <span className="text-xl font-bold">CoverCraft</span>
           </div>
           <div className="flex items-center gap-4">
             <Button variant="ghost" className="text-sm">
               Save
             </Button>
-            <Button className="bg-sky-400 hover:bg-sky-500 text-white">
+            <Button className="bg-sky-500 hover:bg-sky-600 text-white">
               <Download className="mr-2 h-4 w-4" />
               Export
             </Button>
@@ -187,37 +187,61 @@ Mit freundlichen Grüßen,
                         </div>
                       </TabsContent>
                       <TabsContent value="manual" className="space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="space-y-2">
-                            <Label htmlFor="firstName">First Name</Label>
-                            <Input id="firstName" placeholder="John" />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="lastName">Last Name</Label>
-                            <Input id="lastName" placeholder="Doe" />
-                          </div>
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="email">Email</Label>
-                          <Input
-                            id="email"
-                            type="email"
-                            placeholder="john.doe@example.com"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="phone">Phone</Label>
-                          <Input id="phone" placeholder="+1 (555) 123-4567" />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="currentRole">Current Role</Label>
-                          <Input
-                            id="currentRole"
-                            placeholder="Software Engineer"
-                          />
-                        </div>
+                        <Textarea
+                          placeholder="Paste your resume details here..."
+                          className="min-h-[200px]"
+                          value={jobDescription}
+                          onChange={(e) => setJobDescription(e.target.value)}
+                        />
                       </TabsContent>
                     </Tabs>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>LaTeX Template</CardTitle>
+                    <CardDescription>
+                      Use custom LaTeX for PDF generation
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex items-center space-x-2">
+                      <Switch
+                        id="use-latex"
+                        checked={useCustomLatex}
+                        onCheckedChange={setUseCustomLatex}
+                      />
+                      <Label htmlFor="use-latex">
+                        Use custom LaTeX template
+                      </Label>
+                    </div>
+                    {useCustomLatex && (
+                      <div className="space-y-2">
+                        <Label htmlFor="latex-template">LaTeX Code</Label>
+                        <Textarea
+                          id="latex-template"
+                          className="font-mono text-sm h-[200px]"
+                          placeholder="\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+
+\begin{document}
+Your latex code here
+\end{document}"
+                        />
+                      </div>
+                    )}
+                    {useCustomLatex && (
+                      <div className="flex justify-between">
+                        <Button variant="outline" size="sm">
+                          Reset to Default
+                        </Button>
+                        <Button variant="outline" size="sm">
+                          Preview
+                        </Button>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
 
@@ -371,68 +395,6 @@ Mit freundlichen Grüßen,
                       <SelectItem value="long">Long (450+ words)</SelectItem>
                     </SelectContent>
                   </Select>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>LaTeX Template</CardTitle>
-                <CardDescription>
-                  Use custom LaTeX for PDF generation
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center space-x-2">
-                  <Switch id="use-latex" />
-                  <Label htmlFor="use-latex">Use custom LaTeX template</Label>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="latex-template">LaTeX Code</Label>
-                  <Textarea
-                    id="latex-template"
-                    className="font-mono text-sm h-[200px]"
-                    placeholder="\documentclass{article}
-\usepackage[utf8]{inputenc}
-\usepackage[margin=1in]{geometry}
-
-\begin{document}
-\begin{flushright}
-\textbf{[Your Name]}\\
-[Your Address]\\
-[Your Phone]\\
-[Your Email]
-\end{flushright}
-
-\vspace{1cm}
-
-[Date]\\
-\\
-[Recipient Name]\\
-[Company Name]\\
-[Company Address]\\
-\\
-\textbf{Re: [Position Title]}\\
-\\
-Dear [Recipient],\\
-\\
-[Cover Letter Content]\\
-\\
-Sincerely,\\
-\\
-\\
-\\
-[Your Name]
-\end{document}"
-                  />
-                </div>
-                <div className="flex justify-between">
-                  <Button variant="outline" size="sm">
-                    Reset to Default
-                  </Button>
-                  <Button variant="outline" size="sm">
-                    Preview
-                  </Button>
                 </div>
               </CardContent>
             </Card>

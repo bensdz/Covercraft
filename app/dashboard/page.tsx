@@ -82,7 +82,7 @@ export default function DashboardPage() {
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
             <FileText className="h-6 w-6 text-sky-400" />
-            <span className="text-xl font-bold">BewerbungsGenie</span>
+            <span className="text-xl font-bold">CoverCraft</span>
           </div>
           <div className="flex items-center gap-4">
             <Link href="/profile">
